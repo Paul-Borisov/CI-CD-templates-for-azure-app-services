@@ -75,6 +75,8 @@ Folder structures:
         - none  # To be triggered manually
         #- main # To be triggered automatically on each commit to main branch      
    </pre>
+
+   replace with
    
    <pre>
    trigger:  
@@ -110,7 +112,7 @@ Folder structures:
        - none
    </pre>
    
-   with
+   replace with
    
    <pre>
    push:
