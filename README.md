@@ -1,4 +1,4 @@
-# Useful CI/CD templates for Azure Devops pipelines and Github actions to deploy Next.js and .NET Core applications to Azure App Services
+# Useful CI/CD templates to deploy Next.js and .NET Core applications to Azure App Services from Azure DevOps pipelines and Github actions
 
 ## Overview
 
