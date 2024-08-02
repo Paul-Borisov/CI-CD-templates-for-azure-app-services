@@ -55,14 +55,14 @@ Folder structures:
      Next.js replaces empty entries with "undefined" values instead of expected "".
 
    Here, you have two simple alternatives. 
-   a. Save your .env file into Azure DevOps project  > Library > Secure files > .env
-      and use it in your pipeline to dynamically create entire content of .env file just before the build operation.
+   - Save your .env file into Azure DevOps project  > Library > Secure files > .env
+     and use it in your pipeline to dynamically create entire content of .env file just before the build operation.
   
-      OR
+     OR
   
-   b. Use the dummy file .env with empty values like key1= during the build time.
-      For example, create .env.dummy and just rename it in the pipeline to .env before the build operation.
-      Then you can use Environment variables added to your Azure App Service to load actual values dynamically by their key names at the runtime.
+   - Use the dummy file .env with empty values like key1= during the build time.
+     For example, create .env.dummy and just rename it in the pipeline to .env before the build operation.
+     Then you can use Environment variables added to your Azure App Service to load actual values dynamically by their key names at the runtime.
 
 4. Automatic execution on commit.
    - By default, pipeline execution is triggered manually.
