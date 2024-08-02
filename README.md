@@ -22,7 +22,7 @@ Folder structures:
 
 # Getting started
 
-## Azure Devops pipelines
+## Azure DevOps pipelines
 
 1. Copy a corresponding **.devops** folder with all subfolders and files into the root of your project.
 
