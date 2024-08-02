@@ -62,7 +62,7 @@ Here, you have two simple alternatives.
     branches:
       include:
         - none  # To be triggered manually
-        #- main # To be triggered automatically on each commit to main branch      
+        \#- main # To be triggered automatically on each commit to main branch      
 
   trigger:
     branches:
@@ -91,12 +91,12 @@ Here, you have two simple alternatives.
 - You can enable triggering on commit as shown below.
   push:
     branches:
-      # - main
+      \# - main
       - none
       
    with
   push:
     branches:
       - main
-      #- none
+      \#- none
       
