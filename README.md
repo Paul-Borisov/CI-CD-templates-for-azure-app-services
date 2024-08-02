@@ -52,7 +52,7 @@ Folder structures:
    - Typically, this file is excluded from the source control using entries in .gitignore
    - However, Next.js uses entry names from .env file during the build time to generate static references in JS-code.
    - In many cases, if .env file is unavailable during the build time, it may create a tricky problem:
-     Next.js replaces empty entries with "undefined" values instead of expected "".
+     Next.js replaces empty entries with "undefined" values instead of expected empty strings "".
 
    Here, you have two simple alternatives. 
    - Save your .env file into Azure DevOps project  > Library > Secure files > .env
