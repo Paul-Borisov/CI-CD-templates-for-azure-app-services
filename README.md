@@ -37,7 +37,7 @@ Folder structures:
    **runtimeStack**: 'NODE|20-lts'
 
    If you need to hide any of those values, just use your DevOps Project > Library > Variable groups
-     - Create a new group, for instance, **nextjs**. Add a secure variable and its value.
+     - Create a new group, for instance, **nextjs**. Add a variable and its value.
      - Refer to the secure variable using the following notation in **azure-pipelines.yml**
       
        variables:
