@@ -1,0 +1,83 @@
+name: 'Azure Devops Pipeline to build and deploy a standalone Next.js application to Azure App Service'
+
+trigger:
+  branches:
+    include:
+      - none  # To be triggered manually
+      #- main # To be triggered automatically on each commit to main branch
+
+variables:
+  appServiceName: 'your-app-service-name' # Like in https://[your-app-service-name].azurewebsites.net
+  artifactName: drop
+  azureSubscription: 'Azure RM RG Service Principal' # Project settings > Service connections > Azure Resource Manager + Subscription + Resource Group
+  nodeVersion: '20.x' # Adjust according to your Node.js version
+  runtimeStack: 'NODE|20-lts'
+  vmImageName: ubuntu-latest
+
+stages:
+  - stage: Build
+    displayName: 'Build stage'
+    jobs:
+      - job: Build
+        displayName: Build
+        pool:
+          vmImage: $(vmImageName)
+
+        steps:
+          - task: DownloadSecureFile@1
+            inputs:
+              secureFile: .env
+            displayName: 'Download .env'
+
+          - task: CopyFiles@2
+            inputs:
+              sourceFolder: $(Agent.TempDirectory)
+              contents: .env
+              targetFolder: $(System.DefaultWorkingDirectory)
+            displayName: 'Import .env'
+
+          - task: NodeTool@0
+            displayName: 'Setup Node.js'
+            inputs:
+              versionSpec: $(nodeVersion)
+
+          - script: |
+              npm install
+              npm run docker
+            displayName: 'npm install and build'
+
+          - task: ArchiveFiles@2
+            displayName: 'Archive files'
+            inputs:
+              rootFolderOrFile: $(System.DefaultWorkingDirectory)/.next
+              includeRootFolder: false
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+              replaceExistingArchive: true
+
+          - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+            artifact: $(artifactName)
+
+  - stage: Deploy
+    displayName: 'Deploy stage'
+    dependsOn: Build
+    condition: succeeded()
+    jobs:
+      - deployment: Deploy
+        displayName: Deploy
+        environment: AzureAppService
+        pool:
+          vmImage: $(vmImageName)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureWebApp@1
+                  displayName: 'Azure Web App Deploy'
+                  inputs:
+                    azureSubscription: $(azureSubscription)
+                    appType: webAppLinux
+                    appName: $(appServiceName)
+                    runtimeStack: $(runtimeStack)
+                    package: $(Pipeline.Workspace)/$(artifactName)/$(Build.BuildId).zip
+                    startUpCommand: 'node standalone/server.js'

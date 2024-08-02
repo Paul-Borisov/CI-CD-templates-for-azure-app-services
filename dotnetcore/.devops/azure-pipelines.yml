@@ -1,0 +1,75 @@
+name: 'Azure Devops Pipeline to build and deploy .NET Core application to Azure App Service'
+
+trigger:
+  branches:
+    include:
+      - none  # To be triggered manually
+      #- main # To be triggered automatically on each commit to main branch
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  appServiceName: 'your-app-service-name' # Like in https://[your-app-service-name].azurewebsites.net
+  artifactName: drop
+  azureSubscription: 'Azure RM RG Service Principal' # Project settings > Service connections > Azure Resource Manager + Subscription + Resource Group
+  buildConfiguration: Release
+  #resourceGroupName: 'you-need-explicit-resource-group-name-if-you-do-not-use-service-principal'
+  #slotName: 'production'
+
+stages:
+- stage: Build
+  displayName: 'Build Stage'
+  jobs:
+  - job: Build
+    displayName: 'Build Job'
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Install .NET Core SDK'
+      inputs:
+        packageType: 'sdk'
+        version: '8.x' # Adjust according to your .NET version
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet restore'
+      inputs:
+        command: restore
+        #projects: '**/*.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet publish'
+      inputs:
+        command: publish
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+        #projects: '**/*.csproj'
+        publishWebProjects: true
+        zipAfterPublish: true
+
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish pipeline artifacts'
+      inputs:
+        targetPath: $(Build.ArtifactStagingDirectory)
+        artifactName: $(artifactName)
+
+- stage: Deploy
+  displayName: 'Deployment Stage'
+  dependsOn: Build
+  jobs:
+  - deployment: Deploy
+    displayName: 'Deployment Job'
+    environment: AzureAppService
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: $(artifactName)
+
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: $(azureSubscription)
+              appType: webAppLinux
+              appName: $(appServiceName)
+              #resourceGroupName: $(resourceGroupName)
+              # slotName: $(slotName)
+              package: $(Pipeline.Workspace)/$(artifactName)/**/*.zip

@@ -1,0 +1,59 @@
+name: 'Build and deploy .NET Core application to Azure App Service'
+on:
+  push:
+    branches:
+    #- main # To be triggered automatically on each commit to main branch
+    - none  # To be triggered manually
+  workflow_dispatch:
+  
+env:
+  # Create two repository secrets in Settings > Security > Secrets and variables > Actions
+  # - AZURE_APP_SERVICE_NAME
+  #   - Save [your-app-service-name] value just like in https://[your-app-service-name].azurewebsites.net
+  # - AZURE_APP_SERVICE_PUBLISH_PROFILE
+  #   - Download ProfileSettings.xml from your Azure App Service > Overview. 
+  #   - Save entire XML content into AZURE_APP_SERVICE_PUBLISH_PROFILE
+  AZURE_APP_SERVICE_NAME: ${{secrets.AZURE_APP_SERVICE_NAME}}
+  AZURE_APP_SERVICE_PUBLISH_PROFILE: ${{secrets.AZURE_APP_SERVICE_PUBLISH_PROFILE}}
+  CONFIGURATION: Release
+  DOTNETCORE_VERSION: 8.x # Adjust according to your .NET version
+  PACKAGE_PATH: ./publish
+  WORKING_DIRECTORY: .
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: 'Install .NET Core SDK'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{env.DOTNETCORE_VERSION}}
+    - name: Restore
+      run: dotnet restore "${{env.WORKING_DIRECTORY}}"
+    - name: Build
+      run: dotnet build "${{env.WORKING_DIRECTORY}}" --configuration ${{env.CONFIGURATION}} --no-restore
+    - name: Test
+      run: dotnet test "${{env.WORKING_DIRECTORY}}" --no-build
+    - name: Publish
+      run: dotnet publish "${{env.WORKING_DIRECTORY}}" --configuration ${{env.CONFIGURATION}} --no-build --output "${{env.PACKAGE_PATH}}"
+    - name: 'Publish Artifacts'
+      uses: actions/upload-artifact@v4
+      with:
+        name: webapp
+        path: ${{env.PACKAGE_PATH}}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: 'Download artifact from build job'
+      uses: actions/download-artifact@v4
+      with:
+        name: webapp
+        path: ${{env.PACKAGE_PATH}}
+    - name: 'Deploy to Azure App Service'
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{env.AZURE_APP_SERVICE_NAME}}
+        publish-profile: ${{env.AZURE_APP_SERVICE_PUBLISH_PROFILE}}
+        package: ${{env.PACKAGE_PATH}}
