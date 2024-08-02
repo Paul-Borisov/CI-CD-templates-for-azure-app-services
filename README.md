@@ -24,27 +24,27 @@ Folder structures:
 
 ## Azure Devops pipelines
 
-1.Copy a corresponding **.devops** folder with all subfolders and files into the root of your project.
+1. Copy a corresponding **.devops** folder with all subfolders and files into the root of your project.
 
-2.Review and adjust variables found in the headers of **azure-pipelines.yml** files to match with your Azure environment.
+2. Review and adjust variables found in the headers of **azure-pipelines.yml** files to match with your Azure environment.
    
-  **appServiceName**: 'your-app-service-name' # Like in https://[your-app-service-name].azurewebsites.net
+   **appServiceName**: 'your-app-service-name' # Like in https://[your-app-service-name].azurewebsites.net
   
-  **azureSubscription**: 'Azure RM RG Service Principal' # Project settings > Service connections > Azure Resource Manager + Subscription + Resource Group
+   **azureSubscription**: 'Azure RM RG Service Principal' # Project settings > Service connections > Azure Resource Manager + Subscription + Resource Group
   
-  **nodeVersion**: '20.x' # Adjust according to your Node.js version
+   **nodeVersion**: '20.x' # Adjust according to your Node.js version
   
-  **runtimeStack**: 'NODE|20-lts'
+   **runtimeStack**: 'NODE|20-lts'
 
-  - If you need to hide those values, just use your DevOps Project > Library > Variable groups
-    - Create a new group, for instance, nextjs. Add a secure variable.
-    - Refer to the secure variable using the following notation in **azure-pipelines.yml**
+   - If you need to hide those values, just use your DevOps Project > Library > Variable groups
+     - Create a new group, for instance, nextjs. Add a secure variable.
+     - Refer to the secure variable using the following notation in **azure-pipelines.yml**
       
-      variables:
-      - group: nextjs
-      - name: appServiceName
-        
-        value: 'your-app-service-name' # Like in https://[your-app-service-name].azurewebsites.net
+       variables:
+       - group: nextjs
+       - name: appServiceName
+         
+         value: 'your-app-service-name' # Like in https://[your-app-service-name].azurewebsites.net
     
 3. Managing secure files.
 
