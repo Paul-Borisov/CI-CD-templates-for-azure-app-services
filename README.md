@@ -66,7 +66,7 @@ Folder structures:
 
 4. Automatic execution on commit.
    - By default, pipeline execution is triggered manually.
-   - You can enable triggering on commit as shown below.
+   - You can enable it to trigger on commit as shown below.
   
    <pre>
    trigger:  
@@ -102,7 +102,7 @@ Folder structures:
 
 3. Review and adjust .github/workflows/main.yml
    - By default, workflow execution is triggered manually.
-   - You can enable triggering on commit as shown below.
+   - You can enable it to trigger on commit as shown below.
    <pre>
    push:
      branches:
