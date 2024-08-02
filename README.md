@@ -40,12 +40,13 @@ Folder structures:
      - Create a new group, for instance, **nextjs**. Add a variable and its value.
      - Refer to the added variable using the following notation in **azure-pipelines.yml**
       
+     <pre>
        variables:
        - group: nextjs
        - name: appServiceName
-         
          value: 'your-app-service-name' # Like in https://[your-app-service-name].azurewebsites.net
-    
+     </pre>pre>
+     
 3. Managing secure files.
 
 **.env** file is used to manage application settings in Next.js.
