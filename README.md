@@ -1,4 +1,6 @@
-# Overview
+# Useful CI/CD templates for deploying Next.js and .NET Core applications Azure App Services
+
+## Overview
 
 Searching for a suitable CI/CD template to automate application deployments to Azure App Services can be a challenging task. 
 
@@ -20,9 +22,9 @@ Folder structures:
     - workflows
       - main.yml
 
-# Getting started
+## Getting started
 
-## Azure DevOps pipelines
+### Azure DevOps pipelines
 
 1. Copy a corresponding **.devops** folder with all subfolders and files into the root of your project.
 
@@ -85,7 +87,7 @@ Folder structures:
        - main
    </pre>
   
-## Github actions
+### Github actions
 
 1. Copy corresponding **.github** folder with all subfolders and files into the root of your project.
 
