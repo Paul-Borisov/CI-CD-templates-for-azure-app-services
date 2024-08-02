@@ -1,6 +1,6 @@
 # Overview
 
-Searching for a suitable CI/CD template to automate application deployments to Azure App Services can be a challenging task.
+Searching for a suitable CI/CD template to automate application deployments to Azure App Services can be a challenging task. 
 
 I collected a few useful compact templates that I use to establish CI/CD automations for deploying my Next.js and .NET Core applications to Azure App Services.
 
