@@ -29,10 +29,10 @@ Folder structures:
 2. Review and adjust variables found in the headers of **azure-pipelines.yml** files to match with your Azure environment.
 
    <pre>
-   **appServiceName**: 'your-app-service-name' # Like in https://[your-app-service-name].azurewebsites.net
-   **azureSubscription**: 'Azure RM RG Service Principal' # Project settings > Service connections > Azure Resource Manager + Subscription + Resource Group
-   **nodeVersion**: '20.x' # Adjust according to your Node.js version
-   **runtimeStack**: 'NODE|20-lts'
+   appServiceName: 'your-app-service-name' # Like in https://[your-app-service-name].azurewebsites.net
+   azureSubscription: 'Azure RM RG Service Principal' # Project settings > Service connections > Azure Resource Manager + Subscription + Resource Group
+   nodeVersion: '20.x' # Adjust according to your Node.js version
+   runtimeStack: 'NODE|20-lts'
    </pre>
    
    If you need to hide any of those values, just use your DevOps Project > Library > Variable groups
