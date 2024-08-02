@@ -24,9 +24,9 @@ Folder structures:
 
 ## Azure Devops pipelines
 
-\1. Copy a corresponding **.devops** folder with all subfolders and files into the root of your project.
+1.Copy a corresponding **.devops** folder with all subfolders and files into the root of your project.
 
-\2. Review and adjust variables found in the headers of **azure-pipelines.yml** files to match with your Azure environment.
+2.Review and adjust variables found in the headers of **azure-pipelines.yml** files to match with your Azure environment.
    
   **appServiceName**: 'your-app-service-name' # Like in https://[your-app-service-name].azurewebsites.net
   
