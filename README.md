@@ -43,9 +43,9 @@ Folder structures:
       
      <pre>
        variables:
-       - group: nextjs
-       - name: appServiceName
-         value: 'your-app-service-name-variable'
+       - group: nextjs # Then you can refer to the group's hidden variable in the place of its consumption as $(name-of-your-hidden-variable)
+       - name: openVariable
+         value: openVariableValue
      </pre>
      
 3. Managing secure files.
