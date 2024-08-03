@@ -51,7 +51,7 @@ Folder structures:
 3. Managing secure files.
 
    **.env** file is used to manage application settings in Next.js.
-   - Typically, this file is excluded from the source control using entries in .gitignore
+   - Typically, this file is excluded from the source control using the entry in .gitignore
    - However, Next.js uses entry names from .env file during the build time to generate static references in JS-code.
    - In many cases, if .env file is unavailable during the build time, it may create a tricky problem:
      Next.js replaces empty entries with "undefined" values instead of expected empty strings "".
