@@ -37,9 +37,9 @@ Folder structures:
    runtimeStack: 'NODE|20-lts'
    </pre>
    
-   If you need to hide any of those values, just use your DevOps Project > Library > Variable groups
-     - Create a new group, for instance, **nextjs**. Add a variable and its value.
-     - Refer to the added variable using the following notation in **azure-pipelines.yml**
+   If you need to hide any of those values, just use your DevOps Project > Pipelines > Library > Variable groups
+     - Create a new group, for instance, **nextjs**.
+     - Refer to the added variable using the following notation in **azure-pipelines.yml**: $(variable-name).
       
      <pre>
        variables:
@@ -57,7 +57,7 @@ Folder structures:
      Next.js just replaces empty entries with "undefined" values instead of expected empty strings "".
 
    Here, you have two simple alternatives to address the problem. 
-   - Save your .env file into Azure DevOps project  > Library > Secure files > .env
+   - Save your .env file into Azure DevOps project  > Pipelines > Library > Secure files > .env
      and use it in your pipeline to dynamically create entire content of .env file just before the build operation.
   
      OR
