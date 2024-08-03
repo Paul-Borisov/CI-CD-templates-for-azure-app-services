@@ -45,7 +45,7 @@ Folder structures:
        variables:
        - group: nextjs
        - name: appServiceName
-         value: 'your-app-service-name' # Like in https://[your-app-service-name].azurewebsites.net
+         value: 'your-app-service-name-variable'
      </pre>
      
 3. Managing secure files.
