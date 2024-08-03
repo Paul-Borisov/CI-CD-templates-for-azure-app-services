@@ -52,21 +52,24 @@ Folder structures:
 
    **.env** file is used to manage application settings in Next.js.
    - Typically, this file is excluded from the source control using the entry in .gitignore
-   - However, Next.js uses entry names from .env file during the build time to generate static references in JS-code.
+   - When you build your project, Next.js uses entry names from a local (private) copy of .env file to generate static references in the target JS-code.
    - In many cases, if .env file is unavailable during the build time, it may create a tricky problem:
-     Next.js replaces empty entries with "undefined" values instead of expected empty strings "".
+     Next.js just replaces empty entries with "undefined" values instead of expected empty strings "".
 
-   Here, you have two simple alternatives. 
+   Here, you have two simple alternatives to address the problem. 
    - Save your .env file into Azure DevOps project  > Library > Secure files > .env
      and use it in your pipeline to dynamically create entire content of .env file just before the build operation.
   
      OR
   
    - Use the dummy file .env with empty values like key1= during the build time.
-     For example, create .env.dummy and just rename it in the pipeline to .env before the build operation.
+     For example, create .env.dummy and just rename it in the pipeline to .env just before the build operation.
      Then you can use Environment variables added to your Azure App Service to load actual values dynamically by their key names at the runtime.
 
-4. Automatic execution on commit.
+4. Create your Azure DevOps pipeline using the modified **azure-pipelines.yml**
+   - Alternatively, create an ampty pipeline and modify its settings to refer to azure-pipelines.yml
+
+5. Automatic execution on commit.
    - By default, pipeline execution is triggered manually.
    - You can enable it to trigger on commit as shown below.
   
